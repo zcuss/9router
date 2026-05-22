@@ -1,6 +1,11 @@
 name: Publish CLI to GitHub Packages
 
 on:
+  push:
+    branches: [master]
+    paths:
+      - "cli/**"
+      - ".github/workflows/publish-cli-github-packages.yml"
   workflow_dispatch:
   release:
     types: [published]
@@ -25,7 +30,11 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@zcuss'
 
-      - name: Install dependencies
+      - name: Install root dependencies
+        run: npm install
+        working-directory: .
+
+      - name: Install CLI dependencies
         run: npm install
 
       - name: Publish package
