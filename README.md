@@ -75,8 +75,21 @@ Result: Never stop coding, minimal cost + 20-40% token savings via RTK
 **1. Install globally:**
 
 ```bash
-npm install -g 9router
-9router
+npm install -g @zcuss/9router-zcus
+9router-zcus
+```
+
+**Low-memory run (Armbian / VPS kecil):**
+
+```bash
+# RAM <= 2GB
+9router-zcus --low-memory --memory 512 -p 20128
+
+# RAM 1GB
+9router-zcus --low-memory --memory 384 -p 20128
+
+# Background mode
+9router-zcus --low-memory --memory 512 -p 20128 --tray
 ```
 
 🎉 Dashboard opens at `http://localhost:20128`

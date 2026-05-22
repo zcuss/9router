@@ -62,6 +62,36 @@ const INSTALL_CMD_LATEST = `npm i -g ${APP_NAME}@latest --prefer-online`;
 const DEFAULT_PORT = 20128;
 const DEFAULT_HOST = "0.0.0.0";
 const MAX_PORT_ATTEMPTS = 10;
+
+function ensureRuntimeAppCopy() {
+  const runtimeRoot = path.join(os.homedir(), ".9router", "runtime");
+  const runtimeAppDir = path.join(runtimeRoot, "app");
+  const runtimeVersionFile = path.join(runtimeRoot, ".app-version");
+  const sourceAppDir = path.join(__dirname, "app");
+
+  if (!fs.existsSync(sourceAppDir)) {
+    throw new Error("Bundled app directory not found");
+  }
+
+  let currentRuntimeVersion = "";
+  try {
+    if (fs.existsSync(runtimeVersionFile)) {
+      currentRuntimeVersion = fs.readFileSync(runtimeVersionFile, "utf8").trim();
+    }
+  } catch {}
+
+  const shouldRefresh = !fs.existsSync(path.join(runtimeAppDir, "server.js")) || currentRuntimeVersion !== pkg.version;
+
+  if (shouldRefresh) {
+    fs.mkdirSync(runtimeRoot, { recursive: true });
+    fs.rmSync(runtimeAppDir, { recursive: true, force: true });
+    fs.cpSync(sourceAppDir, runtimeAppDir, { recursive: true });
+    fs.writeFileSync(runtimeVersionFile, pkg.version, "utf8");
+  }
+
+  return runtimeAppDir;
+}
+
 // Identifiers for killAllAppProcesses - only kill 9router specifically
 const PROCESS_IDENTIFIERS = [
   '9router'  // Only package name - avoid killing other apps
@@ -470,9 +500,17 @@ function openBrowser(url) {
   });
 }
 
-// Find standalone server (bundled in bin/app for published package)
-const standaloneDir = path.join(__dirname, "app");
-const serverPath = path.join(standaloneDir, "server.js");
+// Find standalone server (copied to user runtime dir to avoid npm EBUSY on global updates)
+let standaloneDir;
+let serverPath;
+
+try {
+  standaloneDir = ensureRuntimeAppCopy();
+  serverPath = path.join(standaloneDir, "server.js");
+} catch (e) {
+  console.error("Error: Failed to prepare runtime app:", e.message);
+  process.exit(1);
+}
 
 if (!fs.existsSync(serverPath)) {
   console.error("Error: Standalone build not found.");
