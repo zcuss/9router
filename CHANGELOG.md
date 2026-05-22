@@ -1,3 +1,8 @@
+# v0.4.70 (2026-05-22)
+
+## Features
+- CI publish: dual publish CLI package to GitHub Packages and npmjs registry
+
 # v0.4.69 (2026-05-22)
 
 ## Fixes

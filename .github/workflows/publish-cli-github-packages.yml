@@ -1,4 +1,4 @@
-name: Publish CLI to GitHub Packages
+name: Publish CLI to Registries
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node.js
+      - name: Setup Node.js for GitHub Packages
         uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -41,7 +41,21 @@ jobs:
       - name: Install CLI dependencies
         run: npm install
 
-      - name: Publish package
-        run: npm publish --access public
+      - name: Publish to GitHub Packages
+        run: npm publish --access public --registry=https://npm.pkg.github.com
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js for npmjs
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Switch publish registry to npmjs
+        run: npm pkg set publishConfig.registry=https://registry.npmjs.org
+
+      - name: Publish to npmjs
+        run: npm publish --access public --registry=https://registry.npmjs.org
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
