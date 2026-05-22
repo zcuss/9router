@@ -1,4 +1,4 @@
-name: Publish CLI to npm
+name: Publish CLI to GitHub Packages
 
 on:
   push:
@@ -11,6 +11,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     defaults:
       run:
         working-directory: cli
@@ -21,8 +24,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org
+          node-version: 24
+          registry-url: https://npm.pkg.github.com
+          scope: '@zcuss'
 
       - name: Install root dependencies
         run: npm install
@@ -34,4 +38,4 @@ jobs:
       - name: Publish package
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
