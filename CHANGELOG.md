@@ -1,3 +1,8 @@
+# v0.4.66 (2026-05-22)
+
+## Fixes
+- CLI preinstall: avoid terminating active npm install/preinstall process on Windows
+
 # v0.4.65 (2026-05-22)
 
 ## Fixes

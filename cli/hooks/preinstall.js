@@ -71,8 +71,23 @@ function getUnixProcesses() {
   }
 }
 
+function isInstallerOrCurrentFlow(commandLine) {
+  const cmd = String(commandLine || "").toLowerCase();
+  return (
+    cmd.includes("npm install") ||
+    cmd.includes("npm.cmd install") ||
+    cmd.includes("npm-cli.js") ||
+    cmd.includes("hooks/preinstall.js") ||
+    cmd.includes("hooks\\preinstall.js") ||
+    cmd.includes("_cacache") ||
+    cmd.includes("\\temp\\npm-")
+  );
+}
+
 function is9routerProcess(commandLine) {
   const cmd = String(commandLine || "").toLowerCase();
+  if (isInstallerOrCurrentFlow(cmd)) return false;
+
   return (
     (cmd.includes("9router-zcus") && (cmd.includes("cli.js") || cmd.includes("server.js"))) ||
     (cmd.includes(".9router") && cmd.includes("runtime") && cmd.includes("app") && cmd.includes("server.js")) ||
