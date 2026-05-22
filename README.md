@@ -79,17 +79,20 @@ npm install -g @zcuss/9router-zcus
 9router-zcus
 ```
 
-**Low-memory run (Armbian / VPS kecil):**
+**Memory handling (auto-detected):**
+
+9Router CLI now auto-detects system RAM and applies safe Node.js memory limits automatically (optimized for low-resource systems like Armbian/VPS).
+
+You can still override manually when needed:
 
 ```bash
-# RAM <= 2GB
 9router-zcus --low-memory --memory 512 -p 20128
+```
 
-# RAM 1GB
-9router-zcus --low-memory --memory 384 -p 20128
+Background mode:
 
-# Background mode
-9router-zcus --low-memory --memory 512 -p 20128 --tray
+```bash
+9router-zcus --tray -p 20128
 ```
 
 🎉 Dashboard opens at `http://localhost:20128`

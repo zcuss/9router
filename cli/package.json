@@ -22,6 +22,7 @@
     "build": "node scripts/build-cli.js",
     "pack:cli": "npm run build && npm pack --pack-destination ../..",
     "publish:cli": "npm run build && npm publish",
+    "preinstall": "node hooks/preinstall.js",
     "postinstall": "node hooks/postinstall.js",
     "prepublishOnly": "npm run build"
   },
