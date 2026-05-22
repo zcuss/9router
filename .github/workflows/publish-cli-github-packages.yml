@@ -23,10 +23,10 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com
-          scope: '@zcus'
+          scope: '@zcuss'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Publish package
         run: npm publish
