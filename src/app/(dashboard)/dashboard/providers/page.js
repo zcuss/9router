@@ -162,8 +162,13 @@ export default function ProvidersPage() {
   }, []);
 
   const getProviderStats = (providerId, authType) => {
+    const allowedAuthTypes =
+      providerId === "codex" && authType === "apikey"
+        ? ["apikey", "access_token"]
+        : [authType];
+
     const providerConnections = connections.filter(
-      (c) => c.provider === providerId && c.authType === authType,
+      (c) => c.provider === providerId && allowedAuthTypes.includes(c.authType),
     );
 
     const getEffectiveStatus = (conn) => {
