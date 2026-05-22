@@ -1,3 +1,14 @@
+# v0.4.63 (2026-05-22)
+
+## Features
+- CLI: add low-memory runtime flags for small VPS/Armbian deployments
+- Codex: add access-token import flow and treat imported tokens as OAuth connections
+
+## Fixes
+- CLI: run bundled app from user runtime storage to avoid Windows npm global update `EBUSY` locks
+- Build: update GitHub Actions checkout/setup-node actions for Node 24 runtime
+- Docs: simplify global install command and add low-memory run examples
+
 # v0.4.59 (2026-05-21)
 
 ## Fixes
