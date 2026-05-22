@@ -160,12 +160,22 @@ if (!standaloneApp) {
 }
 copyRecursive(standaloneApp, cliAppDir);
 
+// Next standalone server still expects the configured distDir next to server.js.
+const bundledDistDir = path.join(cliAppDir, buildDistDirName);
+if (fs.existsSync(buildDistDir)) {
+  copyRecursive(buildDistDir, bundledDistDir);
+  try { fs.rmSync(path.join(bundledDistDir, "cache"), { recursive: true, force: true }); } catch {}
+} else {
+  console.error(`❌ Next.js dist directory not found: ${buildDistDir}`);
+  process.exit(1);
+}
+
 // Nested standalone layouts store traced node_modules at the standalone root.
 const standaloneNodeModules = path.join(standaloneRootToUse, "node_modules");
 if (standaloneApp !== standaloneRootToUse && fs.existsSync(standaloneNodeModules)) {
   copyRecursive(standaloneNodeModules, path.join(cliAppDir, "node_modules"));
 }
-console.log("✅ Copied standalone build\n");
+console.log("✅ Copied standalone build and production dist\n");
 
 // Step 3b: Ensure sql.js (pure JS fallback) bundled in app/cli/app/node_modules.
 // Strip better-sqlite3 (native) — it lives in ~/.9router/runtime to avoid

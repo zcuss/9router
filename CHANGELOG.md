@@ -1,3 +1,8 @@
+# v0.4.69 (2026-05-22)
+
+## Fixes
+- CLI package build: bundle full `.next-cli-build` production dist so global installs can start the standalone server
+
 # v0.4.68 (2026-05-22)
 
 ## Fixes
