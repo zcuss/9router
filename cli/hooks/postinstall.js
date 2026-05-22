@@ -16,6 +16,28 @@ const appDataDir = isWin
   : path.join(os.homedir(), ".9router");
 const restartMarker = path.join(appDataDir, "update-restart.json");
 
+function ensureWindowsBinAlias() {
+  if (!isWin) return;
+  try {
+    const prefix = process.env.npm_config_prefix || path.dirname(process.execPath);
+    const cliPath = path.join(__dirname, "..", "cli.js");
+    const cmdPath = path.join(prefix, "9router-zcus.cmd");
+    const ps1Path = path.join(prefix, "9router-zcus.ps1");
+    const shPath = path.join(prefix, "9router-zcus");
+
+    const cmdContent = `@ECHO off\r\nSETLOCAL\r\n"${process.execPath}" "${cliPath}" %*\r\n`;
+    const ps1Content = `#!/usr/bin/env pwsh\r\n$basedir=Split-Path $MyInvocation.MyCommand.Definition -Parent\r\n& "${process.execPath}" "${cliPath}" $args\r\n`;
+    const shContent = `#!/bin/sh\n\"${process.execPath.replace(/\\/g, "\\\\")}\" \"${cliPath.replace(/\\/g, "\\\\")}\" \"$@\"\n`;
+
+    fs.writeFileSync(cmdPath, cmdContent, "utf8");
+    fs.writeFileSync(ps1Path, ps1Content, "utf8");
+    fs.writeFileSync(shPath, shContent, "utf8");
+    console.log("[9router] ensured Windows command alias: 9router-zcus");
+  } catch (e) {
+    console.warn(`[9router] alias creation skipped: ${e.message}`);
+  }
+}
+
 try {
   ensureSqliteRuntime({ silent: false });
   console.log("[9router] runtime SQLite deps ready");
@@ -28,6 +50,8 @@ try {
 } catch (e) {
   console.warn(`[9router] tray runtime skipped: ${e.message}`);
 }
+
+ensureWindowsBinAlias();
 
 try {
   if (fs.existsSync(restartMarker)) {

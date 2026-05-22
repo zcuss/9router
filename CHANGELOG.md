@@ -1,3 +1,8 @@
+# v0.4.65 (2026-05-22)
+
+## Fixes
+- CLI: ensure `9router-zcus` command shims are created on Windows global installs
+
 # v0.4.64 (2026-05-22)
 
 ## Fixes
