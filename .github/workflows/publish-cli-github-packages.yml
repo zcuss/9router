@@ -5,6 +5,12 @@ on:
     branches: [master]
     paths:
       - "cli/**"
+      - "src/**"
+      - "open-sse/**"
+      - "public/**"
+      - "next.config.mjs"
+      - "package.json"
+      - "package-lock.json"
       - ".github/workflows/publish-cli-github-packages.yml"
   workflow_dispatch:
 

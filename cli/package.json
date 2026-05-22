@@ -1,6 +1,6 @@
 {
   "name": "@zcuss/9router-zcus",
-  "version": "0.4.66",
+  "version": "0.4.67",
   "description": "9Router CLI - Start and manage 9Router server",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",

@@ -1,3 +1,8 @@
+# v0.4.67 (2026-05-22)
+
+## Fixes
+- CI publish: trigger CLI publish workflow when app/dashboard source changes, so global install matches latest dev behavior
+
 # v0.4.66 (2026-05-22)
 
 ## Fixes
