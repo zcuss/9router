@@ -1,3 +1,10 @@
+# v0.4.64 (2026-05-22)
+
+## Fixes
+- CLI update flow: stop running 9router processes in `preinstall` before npm replace
+- CLI update flow: auto-restart service in `postinstall` after successful global update
+- Docs: update low-memory section to clarify automatic RAM detection behavior
+
 # v0.4.63 (2026-05-22)
 
 ## Features
