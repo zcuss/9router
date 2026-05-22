@@ -132,22 +132,35 @@ console.log("✅ Cleaned\n");
 
 // Step 3: Copy Next.js standalone build to app/cli/app.
 // Newer Next.js standalone output writes server.js/package.json plus .next/, src/, and
-// node_modules/ directly under .next/standalone. Older builds may still use a nested app/.
+// node_modules/ directly under the standalone dir. With outputFileTracingRoot=workspace,
+// GitHub Actions can emit it under nested repo paths, so locate server.js recursively.
 console.log("3️⃣  Copying Next.js standalone build to app/cli/app...");
 const standaloneRoot = path.join(appDir, ".next", "standalone");
 const standaloneRootResolved = path.join(buildDistDir, "standalone");
 const standaloneRootToUse = fs.existsSync(standaloneRootResolved) ? standaloneRootResolved : standaloneRoot;
-const standaloneApp = fs.existsSync(path.join(standaloneRootToUse, "server.js"))
-  ? standaloneRootToUse
-  : path.join(standaloneRootToUse, "app");
-if (!fs.existsSync(standaloneApp)) {
-  console.error("❌ Next.js standalone build not found under .next/standalone");
-  console.error("Expected either .next/standalone/server.js or .next/standalone/app/");
+
+function findStandaloneApp(dir, depth = 0) {
+  if (!fs.existsSync(dir) || depth > 5) return null;
+  if (fs.existsSync(path.join(dir, "server.js"))) return dir;
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isDirectory() || entry.name === "node_modules") continue;
+    const found = findStandaloneApp(path.join(dir, entry.name), depth + 1);
+    if (found) return found;
+  }
+  return null;
+}
+
+const standaloneApp = findStandaloneApp(standaloneRootToUse);
+if (!standaloneApp) {
+  console.error(`❌ Next.js standalone build not found under ${standaloneRootToUse}`);
+  console.error("Expected a generated server.js inside the standalone output");
   process.exit(1);
 }
 copyRecursive(standaloneApp, cliAppDir);
 
-// Older nested-app layout stores traced node_modules at standalone root.
+// Nested standalone layouts store traced node_modules at the standalone root.
 const standaloneNodeModules = path.join(standaloneRootToUse, "node_modules");
 if (standaloneApp !== standaloneRootToUse && fs.existsSync(standaloneNodeModules)) {
   copyRecursive(standaloneNodeModules, path.join(cliAppDir, "node_modules"));
