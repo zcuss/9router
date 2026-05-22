@@ -75,7 +75,7 @@ Result: Never stop coding, minimal cost + 20-40% token savings via RTK
 **1. Install globally:**
 
 ```bash
-npm install -g @zcuss/9router-zcus
+npm install -g 9router-zcus
 9router-zcus
 ```
 

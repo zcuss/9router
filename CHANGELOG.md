@@ -1,3 +1,9 @@
+# v0.4.71 (2026-05-22)
+
+## Features
+- Release flow: publish CLI directly to npmjs on every push to `master`
+- Package naming: use unscoped `9router-zcus` for direct global install without custom registry config
+
 # v0.4.70 (2026-05-22)
 
 ## Features

@@ -1,4 +1,4 @@
-name: Publish CLI to Registries
+name: Publish CLI to npmjs
 
 on:
   push:
@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
     defaults:
       run:
         working-directory: cli
@@ -27,12 +26,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node.js for GitHub Packages
+      - name: Setup Node.js for npmjs
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          registry-url: https://npm.pkg.github.com
-          scope: '@zcuss'
+          registry-url: https://registry.npmjs.org
 
       - name: Install root dependencies
         run: npm install
@@ -40,20 +38,6 @@ jobs:
 
       - name: Install CLI dependencies
         run: npm install
-
-      - name: Publish to GitHub Packages
-        run: npm publish --access public --registry=https://npm.pkg.github.com
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node.js for npmjs
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          registry-url: https://registry.npmjs.org
-
-      - name: Switch publish registry to npmjs
-        run: npm pkg set publishConfig.registry=https://registry.npmjs.org
 
       - name: Publish to npmjs
         run: npm publish --access public --registry=https://registry.npmjs.org
