@@ -84,8 +84,35 @@ function ensureRuntimeAppCopy() {
 
   if (shouldRefresh) {
     fs.mkdirSync(runtimeRoot, { recursive: true });
-    fs.rmSync(runtimeAppDir, { recursive: true, force: true });
-    fs.cpSync(sourceAppDir, runtimeAppDir, { recursive: true });
+
+    const tempDir = path.join(runtimeRoot, `app.__new__${process.pid}_${Date.now()}`);
+    const backupDir = path.join(runtimeRoot, `app.__old__${process.pid}_${Date.now()}`);
+
+    fs.rmSync(tempDir, { recursive: true, force: true });
+    fs.cpSync(sourceAppDir, tempDir, { recursive: true });
+
+    let swapped = false;
+    try {
+      if (fs.existsSync(runtimeAppDir)) {
+        fs.renameSync(runtimeAppDir, backupDir);
+      }
+      fs.renameSync(tempDir, runtimeAppDir);
+      swapped = true;
+    } catch {
+      try {
+        fs.rmSync(runtimeAppDir, { recursive: true, force: true });
+      } catch {}
+      fs.cpSync(sourceAppDir, runtimeAppDir, { recursive: true });
+      swapped = true;
+    } finally {
+      try { fs.rmSync(tempDir, { recursive: true, force: true }); } catch {}
+      try { fs.rmSync(backupDir, { recursive: true, force: true }); } catch {}
+    }
+
+    if (!swapped || !fs.existsSync(path.join(runtimeAppDir, "server.js"))) {
+      throw new Error("runtime app swap failed");
+    }
+
     fs.writeFileSync(runtimeVersionFile, pkg.version, "utf8");
   }
 

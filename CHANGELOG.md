@@ -1,3 +1,8 @@
+# v0.4.68 (2026-05-22)
+
+## Fixes
+- CLI runtime bootstrap: avoid Windows `ENOTEMPTY` when refreshing `~/.9router/runtime/app` by using atomic swap + fallback copy
+
 # v0.4.67 (2026-05-22)
 
 ## Fixes
