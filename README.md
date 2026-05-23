@@ -75,8 +75,8 @@ Result: Never stop coding, minimal cost + 20-40% token savings via RTK
 **1. Install globally:**
 
 ```bash
-npm install -g 9router-zcus
-9router-zcus
+npm install -g 0router
+0router
 ```
 
 **Memory handling (auto-detected):**
@@ -86,13 +86,13 @@ npm install -g 9router-zcus
 You can still override manually when needed:
 
 ```bash
-9router-zcus --low-memory --memory 512 -p 20128
+0router --low-memory --memory 512 -p 20128
 ```
 
 Background mode:
 
 ```bash
-9router-zcus --tray -p 20128
+0router --tray -p 20128
 ```
 
 🎉 Dashboard opens at `http://localhost:20128`
@@ -114,7 +114,7 @@ Claude Code/Codex/OpenClaw/Cursor/Cline Settings:
 
 **Alternative: run from source (this repository):**
 
-This repository package is private (`9router-zcus`), so source/Docker execution is the expected local development path.
+This repository package is private (`0router`), so source/Docker execution is the expected local development path.
 
 ```bash
 cp .env.example .env
