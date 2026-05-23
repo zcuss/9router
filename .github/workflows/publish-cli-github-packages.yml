@@ -19,9 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    defaults:
-      run:
-        working-directory: cli
+      id-token: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -31,15 +30,38 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            cli/package-lock.json
 
       - name: Install root dependencies
-        run: npm install
+        run: npm ci
         working-directory: .
 
       - name: Install CLI dependencies
-        run: npm install
+        run: npm ci
+        working-directory: cli
+
+      - name: Check if version already exists on npm
+        id: version_check
+        run: |
+          PKG_NAME=$(node -p "require('./cli/package.json').name")
+          PKG_VERSION=$(node -p "require('./cli/package.json').version")
+          echo "name=$PKG_NAME" >> $GITHUB_OUTPUT
+          echo "version=$PKG_VERSION" >> $GITHUB_OUTPUT
+
+          if npm view "$PKG_NAME@$PKG_VERSION" version --registry=https://registry.npmjs.org > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Version $PKG_VERSION already exists on npm. Skipping publish."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Version $PKG_VERSION not found on npm. Publishing..."
+          fi
 
       - name: Publish to npmjs
-        run: npm publish --access public --registry=https://registry.npmjs.org
+        if: steps.version_check.outputs.exists == 'false'
+        run: npm publish --access public --registry=https://registry.npmjs.org --provenance
+        working-directory: cli
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

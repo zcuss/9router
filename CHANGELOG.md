@@ -1,3 +1,8 @@
+# v0.4.78 (2026-05-23)
+
+## Fixes
+- CI publish: ensure GitHub push publishes CLI directly to npmjs and skips already-published versions
+
 # v0.4.60 (2026-05-23)
 
 ## Fixes
