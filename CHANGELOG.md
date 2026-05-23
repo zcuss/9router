@@ -1,3 +1,8 @@
+# v0.4.75 (2026-05-23)
+
+## Fixes
+- CLI release: republish Windows shim cleanup and non-hidden Next build packaging under a new npm version
+
 # v0.4.74 (2026-05-23)
 
 ## Fixes
