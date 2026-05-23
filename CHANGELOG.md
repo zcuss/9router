@@ -1,3 +1,8 @@
+# v0.4.72 (2026-05-23)
+
+## Fixes
+- CLI runtime self-heal: refresh `~/.9router/runtime/app` when `.next-cli-build/BUILD_ID` is missing, preventing startup crash after partial/old runtime copies
+
 # v0.4.71 (2026-05-22)
 
 ## Features

@@ -80,7 +80,12 @@ function ensureRuntimeAppCopy() {
     }
   } catch {}
 
-  const shouldRefresh = !fs.existsSync(path.join(runtimeAppDir, "server.js")) || currentRuntimeVersion !== pkg.version;
+  const runtimeServerPath = path.join(runtimeAppDir, "server.js");
+  const runtimeBuildIdPath = path.join(runtimeAppDir, ".next-cli-build", "BUILD_ID");
+  const shouldRefresh =
+    !fs.existsSync(runtimeServerPath) ||
+    !fs.existsSync(runtimeBuildIdPath) ||
+    currentRuntimeVersion !== pkg.version;
 
   if (shouldRefresh) {
     fs.mkdirSync(runtimeRoot, { recursive: true });
