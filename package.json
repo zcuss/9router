@@ -1,8 +1,12 @@
 {
   "name": "0router",
-  "version": "0.4.60",
+  "version": "0.4.61",
   "description": "9Router web dashboard",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zcuss/9router"
+  },
   "scripts": {
     "dev": "next dev --webpack --port 20128",
     "build": "next build --webpack",

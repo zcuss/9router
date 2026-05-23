@@ -1,3 +1,8 @@
+# v0.4.61 (2026-05-23)
+
+## Fixes
+- CI publish: add repository metadata required by npm provenance verification
+
 # v0.4.79 (2026-05-23)
 
 ## Fixes

@@ -1,7 +1,11 @@
 {
   "name": "0router",
-  "version": "0.4.60",
+  "version": "0.4.61",
   "description": "9Router CLI - Start and manage 9Router server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zcuss/9router"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
