@@ -1,3 +1,8 @@
+# v0.4.76 (2026-05-23)
+
+## Fixes
+- Rename CLI package and command to `9route-zcus` across install hooks and docs
+
 # v0.4.75 (2026-05-23)
 
 ## Fixes
@@ -22,7 +27,7 @@
 
 ## Features
 - Release flow: publish CLI directly to npmjs on every push to `master`
-- Package naming: use unscoped `9router-zcus` for direct global install without custom registry config
+- Package naming: use unscoped `9route-zcus` for direct global install without custom registry config
 
 # v0.4.70 (2026-05-22)
 
@@ -52,7 +57,7 @@
 # v0.4.65 (2026-05-22)
 
 ## Fixes
-- CLI: ensure `9router-zcus` command shims are created on Windows global installs
+- CLI: ensure `9route-zcus` command shims are created on Windows global installs
 
 # v0.4.64 (2026-05-22)
 

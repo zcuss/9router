@@ -16,12 +16,12 @@ function cleanupWindowsGlobalShims() {
 
   const candidates = new Set();
   const npmPrefix = process.env.npm_config_prefix;
-  if (npmPrefix) candidates.add(path.join(npmPrefix, "9router-zcus.cmd"));
+  if (npmPrefix) candidates.add(path.join(npmPrefix, "9route-zcus.cmd"));
 
   const nodeDir = path.dirname(process.execPath || "");
   if (nodeDir) {
-    candidates.add(path.join(nodeDir, "9router-zcus.cmd"));
-    candidates.add(path.join(nodeDir, "9router-zcus"));
+    candidates.add(path.join(nodeDir, "9route-zcus.cmd"));
+    candidates.add(path.join(nodeDir, "9route-zcus"));
   }
 
   for (const shimPath of candidates) {
@@ -109,7 +109,7 @@ function is9routerProcess(commandLine) {
   if (isInstallerOrCurrentFlow(cmd)) return false;
 
   return (
-    (cmd.includes("9router-zcus") && (cmd.includes("cli.js") || cmd.includes("server.js"))) ||
+    (cmd.includes("9route-zcus") && (cmd.includes("cli.js") || cmd.includes("server.js"))) ||
     (cmd.includes(".9router") && cmd.includes("runtime") && cmd.includes("app") && cmd.includes("server.js")) ||
     cmd.includes("next-server")
   );

@@ -95,7 +95,7 @@ Cài đặt Claude Code/Codex/Gemini CLI/OpenClaw/Cursor/Cline:
 
 **Phương án khác: chạy từ nguồn (k lưu trữ này):**
 
-Gói kho lưu trữ này là riêng tư (`9router-app`), vì vậy việc thực thi nguồn/Docker là đường dẫn phát triển cục bộ dự kiến.
+Gói kho lưu trữ này là riêng tư (`9route-zcus`), vì vậy việc thực thi nguồn/Docker là đường dẫn phát triển cục bộ dự kiến.
 
 ```bash
 cp .env.example .env

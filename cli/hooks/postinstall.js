@@ -21,9 +21,9 @@ function ensureWindowsBinAlias() {
   try {
     const prefix = process.env.npm_config_prefix || path.dirname(process.execPath);
     const cliPath = path.join(__dirname, "..", "cli.js");
-    const cmdPath = path.join(prefix, "9router-zcus.cmd");
-    const ps1Path = path.join(prefix, "9router-zcus.ps1");
-    const shPath = path.join(prefix, "9router-zcus");
+    const cmdPath = path.join(prefix, "9route-zcus.cmd");
+    const ps1Path = path.join(prefix, "9route-zcus.ps1");
+    const shPath = path.join(prefix, "9route-zcus");
 
     const cmdContent = `@ECHO off\r\nSETLOCAL\r\n"${process.execPath}" "${cliPath}" %*\r\n`;
     const ps1Content = `#!/usr/bin/env pwsh\r\n$basedir=Split-Path $MyInvocation.MyCommand.Definition -Parent\r\n& "${process.execPath}" "${cliPath}" $args\r\n`;
@@ -32,7 +32,7 @@ function ensureWindowsBinAlias() {
     fs.writeFileSync(cmdPath, cmdContent, "utf8");
     fs.writeFileSync(ps1Path, ps1Content, "utf8");
     fs.writeFileSync(shPath, shContent, "utf8");
-    console.log("[9router] ensured Windows command alias: 9router-zcus");
+    console.log("[9router] ensured Windows command alias: 9route-zcus");
   } catch (e) {
     console.warn(`[9router] alias creation skipped: ${e.message}`);
   }
