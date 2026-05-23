@@ -11,6 +11,26 @@ const appDataDir = isWin
   : path.join(os.homedir(), ".9router");
 const restartMarker = path.join(appDataDir, "update-restart.json");
 
+function cleanupWindowsGlobalShims() {
+  if (!isWin) return;
+
+  const candidates = new Set();
+  const npmPrefix = process.env.npm_config_prefix;
+  if (npmPrefix) candidates.add(path.join(npmPrefix, "9router-zcus.cmd"));
+
+  const nodeDir = path.dirname(process.execPath || "");
+  if (nodeDir) {
+    candidates.add(path.join(nodeDir, "9router-zcus.cmd"));
+    candidates.add(path.join(nodeDir, "9router-zcus"));
+  }
+
+  for (const shimPath of candidates) {
+    try {
+      if (fs.existsSync(shimPath)) fs.rmSync(shimPath, { force: true });
+    } catch {}
+  }
+}
+
 function parseCsvLine(line) {
   const out = [];
   let cur = "";
@@ -120,6 +140,8 @@ function killPid(pid) {
     }
   } catch {}
 }
+
+cleanupWindowsGlobalShims();
 
 const running = (isWin ? getWindowsProcesses() : getUnixProcesses()).filter((p) => is9routerProcess(p.commandLine));
 

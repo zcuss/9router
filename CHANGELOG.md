@@ -1,3 +1,8 @@
+# v0.4.74 (2026-05-23)
+
+## Fixes
+- CLI installer: remove stale Windows command shims during preinstall to avoid npm global update `EEXIST` failures
+
 # v0.4.73 (2026-05-23)
 
 ## Fixes
