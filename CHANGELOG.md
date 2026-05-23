@@ -1,9 +1,9 @@
-# v0.4.77 (2026-05-23)
+# v0.4.60 (2026-05-23)
 
 ## Fixes
-- Publish fix: restore npm package identity to `9route-zcus` and replace Unix-only `du` size check for Windows compatibility
+- Release rollback: set root and CLI package version to `0.4.60` for republish target
 
-# v0.4.76 (2026-05-23)
+# v0.4.77 (2026-05-23)
 
 ## Fixes
 - Rename CLI package and command to `9router-zcus` across install hooks and docs
