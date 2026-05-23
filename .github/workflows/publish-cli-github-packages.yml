@@ -30,17 +30,13 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-          cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            cli/package-lock.json
 
       - name: Install root dependencies
-        run: npm ci
+        run: npm install
         working-directory: .
 
       - name: Install CLI dependencies
-        run: npm ci
+        run: npm install
         working-directory: cli
 
       - name: Check if version already exists on npm

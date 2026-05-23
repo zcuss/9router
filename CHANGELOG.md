@@ -1,3 +1,8 @@
+# v0.4.79 (2026-05-23)
+
+## Fixes
+- CI publish: remove dependency cache path in setup-node to avoid unresolved lockfile error on GitHub runner
+
 # v0.4.78 (2026-05-23)
 
 ## Fixes
