@@ -81,7 +81,7 @@ function ensureRuntimeAppCopy() {
   } catch {}
 
   const runtimeServerPath = path.join(runtimeAppDir, "server.js");
-  const runtimeBuildIdPath = path.join(runtimeAppDir, ".next-cli-build", "BUILD_ID");
+  const runtimeBuildIdPath = path.join(runtimeAppDir, "next-cli-build", "BUILD_ID");
   const shouldRefresh =
     !fs.existsSync(runtimeServerPath) ||
     !fs.existsSync(runtimeBuildIdPath) ||
@@ -627,6 +627,7 @@ function startServer(latestVersion) {
       windowsHide: true,
       env: {
         ...buildEnvWithRuntime(process.env),
+        NEXT_DIST_DIR: "next-cli-build",
         PORT: port.toString(),
         HOSTNAME: host
       }

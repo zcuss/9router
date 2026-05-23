@@ -1,3 +1,8 @@
+# v0.4.73 (2026-05-23)
+
+## Fixes
+- CLI packaging: use non-hidden `next-cli-build` production dist and set `NEXT_DIST_DIR` at runtime so npm global installs include the Next build reliably
+
 # v0.4.72 (2026-05-23)
 
 ## Fixes

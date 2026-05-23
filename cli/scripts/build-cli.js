@@ -9,7 +9,7 @@ const appDir = path.resolve(cliDir, "..");
 const rootDir = path.resolve(appDir, "..");
 const cliAppDir = path.join(cliDir, "app");
 const buildHomeDir = path.join(cliDir, ".build-home");
-const buildDistDirName = ".next-cli-build";
+const buildDistDirName = "next-cli-build";
 const buildDistDir = path.join(appDir, buildDistDirName);
 
 // Exclude patterns for files/folders we don't want to copy
